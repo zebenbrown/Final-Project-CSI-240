@@ -1,14 +1,21 @@
 #define SDL_MAIN_HANDLED true
 #include <iostream>
 #include <algorithm>
+#include <fstream>
 
 #include <SDL.h>
 #include <SDL_image.h>
 //#include <SDL_mixer.h>
 //#include <SDL_ttf.h>
+
+
 #include "imgui.h"
 #include "imgui_impl_sdl.h"
 #include "imgui_impl_sdlrenderer.h"
+#include <cpr/cpr.h>
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -28,6 +35,33 @@ int main(int argc, char* argv[]) {
     // Unused argc, argv
     (void) argc;
     (void) argv;
+    std::ofstream PlayerIDOut;
+    json js;
+    cpr::Response r = cpr::Get(cpr::Url{"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBPlayerList"},
+                               cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+                               cpr::Header {
+                                                {"X-RapidAPI-Key" ,"45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+                                                {"X-RapidAPI-Host" ,"tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+    });
+
+        PlayerIDOut.open("PlayerIDs.txt");
+        if (PlayerIDOut.fail()){
+            std::cout << "PlayerIDs.txt" << std::endl;
+            exit(1);
+        }
+        js= json::parse(r.text);
+
+        PlayerIDOut << js["body"][0]["longName"].get<std::string>() << std::endl;
+        PlayerIDOut.close();
+
+    r.status_code;                  // 200
+    r.header["content-type"];       // application/json; charset=utf-8
+    r.text;                         // JSON text string
+    std::cout << r.status_code << std::endl;
+
+    //std::cout << r.text << std::endl;
+
+    std::cout << js.parse(r.text) << std::endl;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
         printf("Error: %s\n", SDL_GetError());
@@ -43,7 +77,7 @@ int main(int argc, char* argv[]) {
 
     // Setup window
     SDL_WindowFlags window_flags = (SDL_WindowFlags) (SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN);
-    SDL_Window *window = SDL_CreateWindow("Dear ImGui SDL2+SDL_Renderer example", SDL_WINDOWPOS_CENTERED,
+    SDL_Window *window = SDL_CreateWindow("Baseball Stats Program", SDL_WINDOWPOS_CENTERED,
                                           SDL_WINDOWPOS_CENTERED, width, height, window_flags);
 
     if (!window) {
@@ -85,7 +119,9 @@ int main(int argc, char* argv[]) {
     // - Read 'docs/FONTS.md' for more instructions and details.
     // - Remember that in C/C++ if you want to include a backslash \ in a string literal you need to write a double backslash \\ !
     //io.Fonts->AddFontDefault();
-    //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+
+    //io.Fonts->AddFontFromFileTTF("/Users/zebenbrown/Library/Fonts/commando.ttf", 12.0f);
+    io.Fonts->Build();
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/Cousine-Regular.ttf", 15.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/DroidSans.ttf", 16.0f);
     //io.Fonts->AddFontFromFileTTF("../../misc/fonts/ProggyTiny.ttf", 10.0f);
@@ -93,7 +129,7 @@ int main(int argc, char* argv[]) {
     //IM_ASSERT(font != NULL);
 
     // Our state
-    bool show_demo_window = true;
+    bool show_demo_window = false;
     bool show_another_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
@@ -108,7 +144,7 @@ int main(int argc, char* argv[]) {
     squareRect.h = std::min(width, height) / 2;
 
     // Square position: In the middle of the screen
-    squareRect.x = width / 2 - squareRect.w / 2;
+    squareRect.x = width / 2 - squareRect.w / 2 - squareRect.w;
     squareRect.y = height / 2 - squareRect.h / 2;
 
     // Event loop
@@ -143,19 +179,19 @@ int main(int argc, char* argv[]) {
             static float f = 0.0f;
             static int counter = 0;
 
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+            ImGui::Begin("Welcome To Baseball Stats Program", nullptr, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoMove);                          // Create a window called "Hello, world!" and append into it.
+            //ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
 
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
 
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
+            //ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+            //ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
+
+            //if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+                //counter++;
+            //ImGui::SameLine();
+            //ImGui::Text("counter = %d", counter);
 
             ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
             ImGui::End();
@@ -180,9 +216,9 @@ int main(int argc, char* argv[]) {
 
         // todo: add your game logic here to be drawn before the ui rendering
         // Set renderer color red to draw the square
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+        //SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
         // Draw filled square
-        SDL_RenderFillRect(renderer, &squareRect);
+        //SDL_RenderFillRect(renderer, &squareRect);
 
         // present ui on top of your drawings
         ImGui_ImplSDLRenderer_RenderDrawData(ImGui::GetDrawData());
