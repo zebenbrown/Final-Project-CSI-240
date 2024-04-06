@@ -35,7 +35,14 @@ int main(int argc, char* argv[]) {
     // Unused argc, argv
     (void) argc;
     (void) argv;
+
     std::ofstream PlayerIDOut;
+    PlayerIDOut.open("players.txt", std::ios::out);
+    if (PlayerIDOut.fail()){
+        std::cout << "players.txt" << std::endl;
+        exit(1);
+    }
+
     json js;
     cpr::Response r = cpr::Get(cpr::Url{"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBPlayerList"},
                                cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
@@ -44,15 +51,20 @@ int main(int argc, char* argv[]) {
                                                 {"X-RapidAPI-Host" ,"tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
     });
 
-        PlayerIDOut.open("PlayerIDs.txt");
-        if (PlayerIDOut.fail()){
-            std::cout << "PlayerIDs.txt" << std::endl;
-            exit(1);
-        }
+
         js= json::parse(r.text);
 
-        PlayerIDOut << js["body"][0]["longName"].get<std::string>() << std::endl;
+    for(auto player : js["body"]) {
+        std::string name = player["longName"];
+        std::string playerID = player["playerID"];
+        std::string team = player["team"];
+        std::string teamID = player["teamID"];
+        std::cout << name << " " << playerID << " " << team << " " << teamID << std::endl;
+        PlayerIDOut << name << std::endl; //<< " " << playerID << " " << team << " " << teamID << std::endl;
+    }
+        PlayerIDOut << "hey" << std::endl;
         PlayerIDOut.close();
+
 
     r.status_code;                  // 200
     r.header["content-type"];       // application/json; charset=utf-8
@@ -61,7 +73,7 @@ int main(int argc, char* argv[]) {
 
     //std::cout << r.text << std::endl;
 
-    std::cout << js.parse(r.text) << std::endl;
+    //std::cout << js.parse(r.text) << std::endl;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
         printf("Error: %s\n", SDL_GetError());
