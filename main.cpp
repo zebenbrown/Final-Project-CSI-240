@@ -36,44 +36,108 @@ int main(int argc, char* argv[]) {
     (void) argc;
     (void) argv;
 
-    std::ofstream PlayerIDOut;
-    PlayerIDOut.open("players.txt", std::ios::out);
-    if (PlayerIDOut.fail()){
-        std::cout << "players.txt" << std::endl;
+    std::ofstream PlayerIdOut;
+    PlayerIdOut.open("players.txt", std::ios::out);
+    if (!PlayerIdOut.is_open()){
+        std::cout << "players.txt failed to open" << std::endl;
+        exit(1);
+    }
+    std::ifstream PlayerIdIn;
+    PlayerIdIn.open("players.txt", std::ios::in);
+    if(!PlayerIdIn.is_open()){
+        std::cout << "players.txt failed to open" << std::endl;
+        exit(2);
+    }
+
+    std::ofstream ARI_rosterOut;
+    ARI_rosterOut.open("Arizona Diamondbacks.txt", std::ios::out);
+    if (!ARI_rosterOut.is_open()){
+        std::cout << "players.txt failed to open" << std::endl;
         exit(1);
     }
 
     json js;
-    cpr::Response r = cpr::Get(cpr::Url{"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBPlayerList"},
+    cpr::Response player_list = cpr::Get(cpr::Url{"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBPlayerList"},
                                cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
                                cpr::Header {
                                                 {"X-RapidAPI-Key" ,"45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
                                                 {"X-RapidAPI-Host" ,"tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
     });
+        js = json::parse(player_list.text);
 
-
-        js= json::parse(r.text);
-
-    for(auto player : js["body"]) {
-        std::string name = player["longName"];
-        std::string playerID = player["playerID"];
-        std::string team = player["team"];
-        std::string teamID = player["teamID"];
-        std::cout << name << " " << playerID << " " << team << " " << teamID << std::endl;
-        PlayerIDOut << name << std::endl; //<< " " << playerID << " " << team << " " << teamID << std::endl;
+    if (player_list.status_code != 200){
+        for(auto player : js["body"]){
+            std::string name = player["longName"];
+            std::string playerID = player["playerID"];
+            std::string team = player["team"];
+            std::string teamID = player["teamID"];
+            PlayerIdIn >> name >> playerID >> team >> teamID;
+        }
     }
-        PlayerIDOut << "hey" << std::endl;
-        PlayerIDOut.close();
+    else{
+        for(auto player : js["body"]) {
+            std::string name = player["longName"];
+            std::string playerID = player["playerID"];
+            std::string team = player["team"];
+            std::string teamID = player["teamID"];
+            std::cout << name << " " << playerID << " " << team << " " << teamID << std::endl;
+            PlayerIdOut << name << " " << playerID << " " << team << " " << teamID << std::endl;
+        }
+    }
+
+        PlayerIdOut.close();
 
 
-    r.status_code;                  // 200
-    r.header["content-type"];       // application/json; charset=utf-8
-    r.text;                         // JSON text string
-    std::cout << r.status_code << std::endl;
+    player_list.status_code;                  // 200
+    player_list.header["content-type"];       // application/json; charset=utf-8
+    player_list.text;                         // JSON text string
+    std::cout << player_list.status_code << std::endl;
+    cpr::Response ARI_roster = cpr::Get(cpr::Url{"https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=ARI&getStats=true"},
+                               cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+                               cpr::Header {
+                                       {"X-RapidAPI-Key" ,"45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+                                       {"X-RapidAPI-Host" ,"tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+                               });
+    json ps;
+    ps = json::parse(ARI_roster.text);
+    //std::cout << ARI_roster.text << std::endl;
 
-    //std::cout << r.text << std::endl;
-
-    //std::cout << js.parse(r.text) << std::endl;
+    for (auto ARI : ps["body"]) {
+        for (auto ARI: ps["roster"]) {
+            std::string college = ARI["college"];
+            std::string fantasy_link = ARI["fantasyProsLink"];
+            std::string jersey_number = ARI["jerseyNum"];
+            std::string yahooLink = ARI["yahooLink"];
+            std::string sleeperBotID = ARI["sleeperBotID"];
+            std::string fantasyProsPlayerID = ARI["fantasyProsPlayerID"];
+            std::string mlbID = ARI["mlbID"];
+            std::string lastGamePlayed = ARI["lastGamePlayed"];
+            std::string espnLink = ARI["espnLink"];
+            std::string yahooPlayerID = ARI["yahooPlayerID"];
+            std::string batting_handness = ARI["bat"];
+            std::string position = ARI["pos"];
+            std::string teamID = ARI["teamID"];
+            std::string mlbIDFull = ARI["mlbIDFull"];
+            std::string rotoWirePlayerIDFull = ARI["rotoWirePlayerIDFull"];
+            std::string rotoWirePlayerID = ARI["rotoWirePlayerID"];
+            std::string height = ARI["height"];
+            std::string espnHeadshot = ARI["espnHeadshot"];
+            std::string espnID = ARI["espnID"];
+            std::string mlbLink = ARI["mlbLink"];
+            std::string mlbHeadshot = ARI["mlbHeadshot"];
+            std::string weight = ARI["weight"];
+            std::string team = ARI["team"];
+            std::string teamAbv = ARI["teamAbv"];
+            std::string throwing_handness = ARI["throw"];
+            std::string birthday = ARI["bDay"];
+            std::string cbsPlayerID = ARI["cbsPlayerID"];
+            std::string name = ARI["longName"];
+            std::string playerID = ARI["playerID"];
+            std::cout << name << " " << position << " " << batting_handness << " " << jersey_number << std::endl;
+        }
+    }
+    ARI_roster.status_code;
+    std::cout << ARI_roster.status_code << std::endl;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
         printf("Error: %s\n", SDL_GetError());
