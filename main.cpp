@@ -188,7 +188,7 @@ int main(int argc, char* argv[]) {
     } else {
 
         for (auto player: js["body"]) {
-            std::cout << player << std::endl;
+            //std::cout << player << std::endl;
             std::string pid = player["playerID"];
             playerMap[pid] = player;
             allIDs.push_back(pid);
@@ -210,30 +210,32 @@ int main(int argc, char* argv[]) {
                                             });
         json ps;
         ps = json::parse(ARI_roster.text);
-        std::cout << ps["body"]["roster"] << std::endl;
+        //std::cout << ps["body"]["roster"] << std::endl;
 
+
+//        for (auto ARI: ps["body"]["roster"]) {
+//            //std::string college = ARI["college"];
+//            std::string jersey_number = ARI["jerseyNum"];
+//            std::string batting_handness = ARI["bat"];
+//            std::string position = ARI["pos"];
+//            std::string height = ARI["height"];
+//            std::string weight = ARI["weight"];
+//            std::string throwing_handness = ARI["throw"];
+//            //std::string birthday = ARI["bDay"];
+//            std::string name = ARI["longName"];
+//
+//
+//            ARI_rosterOut << name << " Position: " << position << " Throws: " << throwing_handness << " Bats: "
+//                          << batting_handness << " Jersey Number:" << jersey_number << " Height: " << height
+//                          << " Weight: " << weight << std::endl;
+//        }
 
         for (auto ARI: ps["body"]["roster"]) {
-            //std::string college = ARI["college"];
-            std::string jersey_number = ARI["jerseyNum"];
-            std::string batting_handness = ARI["bat"];
-            std::string position = ARI["pos"];
-            std::string height = ARI["height"];
-            std::string weight = ARI["weight"];
-            std::string throwing_handness = ARI["throw"];
-            //std::string birthday = ARI["bDay"];
-            std::string name = ARI["longName"];
-
-
-            ARI_rosterOut << name << " Position: " << position << " Throws: " << throwing_handness << " Bats: "
-                          << batting_handness << " Jersey Number:" << jersey_number << " Height: " << height
-                          << " Weight: " << weight << std::endl;
-        }
-
-        for (auto ARI: ps["body"]["roster"]) {
-            // example on getting the stats and store it in a struct
             std::string pid = ARI["playerID"];
             rosterMap[pid] = ARI;
+            BaseRunning_Stats baseRunningStats = BaseRunning_Stats(rosterMap[pid]);
+
+
         }
             ARI_roster.status_code;
             std::cout << ARI_roster.status_code << std::endl;
