@@ -233,9 +233,7 @@ int main(int argc, char* argv[]) {
         for (auto ARI: ps["body"]["roster"]) {
             std::string pid = ARI["playerID"];
             rosterMap[pid] = ARI;
-            BaseRunning_Stats baseRunningStats = BaseRunning_Stats(rosterMap[pid]);
-
-
+            BaseRunning_Stats baseRunningStats = BaseRunning_Stats((rosterMap[pid]));
         }
             ARI_roster.status_code;
             std::cout << ARI_roster.status_code << std::endl;
