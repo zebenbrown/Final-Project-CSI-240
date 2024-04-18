@@ -142,7 +142,7 @@ int main(int argc, char* argv[]) {
     (void) argv;
 
     //database where the key is the PlayerID and the value is the json
-    std::map<std::string, json> playerMap, rosterMap;
+    std::map<std::string, json> playerMap, rosterMap, teamMap;
     std::vector<std::string> allIDs;
 
     std::ofstream PlayerIdOut;
@@ -235,6 +235,8 @@ int main(int argc, char* argv[]) {
 
         for (auto ARI: js["body"]["roster"]) {
             std::string pid = ARI["playerID"];
+            std::string teamID = ARI["teamID"];
+            teamMap[teamID] = ARI;
             rosterMap[pid] = ARI;
             if (rosterMap[pid].contains("stats") && rosterMap[pid]["stats"].contains("Pitching") && !rosterMap[pid]["stats"].empty()) {
                 //BaseRunning_Stats baseRunningStats = BaseRunning_Stats(rosterMap[pid]);
@@ -261,7 +263,9 @@ int main(int argc, char* argv[]) {
 
             for (auto COL: js["body"]["roster"]) {
             std::string pid = COL["playerID"];
+            std::string teamID = COL["teamID"];
             rosterMap[pid] = COL;
+            teamMap[teamID] = COL;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
             }
@@ -284,6 +288,8 @@ int main(int argc, char* argv[]) {
 
         for (auto LAD: js["body"]["roster"]) {
             std::string pid = LAD["playerID"];
+            std::string teamID = LAD["teamID"];
+            teamMap[teamID] = LAD;
             rosterMap[pid] = LAD;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -307,7 +313,9 @@ int main(int argc, char* argv[]) {
 
         for (auto SF: js["body"]["roster"]) {
             std::string pid = SF["playerID"];
+            std::string teamID = SF["teamID"];
             rosterMap[pid] = SF;
+            teamMap[teamID] = SF;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
             }
@@ -331,6 +339,8 @@ int main(int argc, char* argv[]) {
 
         for (auto SD: js["body"]["roster"]) {
             std::string pid = SD["playerID"];
+            std::string teamID = SD["teamID"];
+            teamMap[teamID] = SD;
             rosterMap[pid] = SD;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -356,6 +366,8 @@ int main(int argc, char* argv[]) {
 
         for (auto CHC: js["body"]["roster"]) {
             std::string pid = CHC["playerID"];
+            std::string teamID = CHC["teamID"];
+            teamMap[teamID] = CHC;
             rosterMap[pid] = CHC;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -380,6 +392,8 @@ int main(int argc, char* argv[]) {
 
         for (auto STL: js["body"]["roster"]) {
             std::string pid = STL["playerID"];
+            std::string teamID = STL["teamID"];
+            teamMap[teamID] = STL;
             rosterMap[pid] = STL;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -404,7 +418,10 @@ int main(int argc, char* argv[]) {
 
         for (auto CIN: js["body"]["roster"]) {
             std::string pid = CIN["playerID"];
+            std::string teamID = CIN["teamID"];
+            teamMap[teamID] = CIN;
             rosterMap[pid] = CIN;
+
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
             }
@@ -428,6 +445,8 @@ int main(int argc, char* argv[]) {
 
         for (auto PIT: js["body"]["roster"]) {
             std::string pid = PIT["playerID"];
+            std::string teamID = PIT["teamID"];
+            teamMap[teamID] = PIT;
             rosterMap[pid] = PIT;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -452,6 +471,8 @@ int main(int argc, char* argv[]) {
 
         for (auto MIL: js["body"]["roster"]) {
             std::string pid = MIL["playerID"];
+            std::string teamID = MIL["teamID"];
+            teamMap[teamID] = MIL;
             rosterMap[pid] = MIL;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -476,6 +497,8 @@ int main(int argc, char* argv[]) {
 
         for (auto PHI: js["body"]["roster"]) {
             std::string pid = PHI["playerID"];
+            std::string teamID = PHI["teamID"];
+            teamMap[teamID] = PHI;
             rosterMap[pid] = PHI;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -500,6 +523,8 @@ int main(int argc, char* argv[]) {
 
         for (auto NYM: js["body"]["roster"]) {
             std::string pid = NYM["playerID"];
+            std::string teamID = NYM["teamID"];
+            teamMap[teamID] = NYM;
             rosterMap[pid] = NYM;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -524,6 +549,8 @@ int main(int argc, char* argv[]) {
 
         for (auto ATL: js["body"]["roster"]) {
             std::string pid = ATL["playerID"];
+            std::string teamID = ATL["teamID"];
+            teamMap[teamID] = ATL;
             rosterMap[pid] = ATL;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -548,6 +575,8 @@ int main(int argc, char* argv[]) {
 
         for (auto MIA: js["body"]["roster"]) {
             std::string pid = MIA["playerID"];
+            std::string teamID = MIA["teamID"];
+            teamMap[teamID] = MIA;
             rosterMap[pid] = MIA;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -572,6 +601,8 @@ int main(int argc, char* argv[]) {
 
         for (auto WSH: js["body"]["roster"]) {
             std::string pid = WSH["playerID"];
+            std::string teamID = WSH["teamID"];
+            teamMap[teamID] = WSH;
             rosterMap[pid] = WSH;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -596,6 +627,8 @@ int main(int argc, char* argv[]) {
 
         for (auto SEA: js["body"]["roster"]) {
             std::string pid = SEA["playerID"];
+            std::string teamID = SEA["teamID"];
+            teamMap[teamID] = SEA;
             rosterMap[pid] = SEA;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -620,6 +653,8 @@ int main(int argc, char* argv[]) {
 
         for (auto HOU: js["body"]["roster"]) {
             std::string pid = HOU["playerID"];
+            std::string teamID = HOU["teamID"];
+            teamMap[teamID] = HOU;
             rosterMap[pid] = HOU;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -644,6 +679,8 @@ int main(int argc, char* argv[]) {
 
         for (auto LAA: js["body"]["roster"]) {
             std::string pid = LAA["playerID"];
+            std::string teamID = LAA["teamID"];
+            teamMap[teamID] = LAA;
             rosterMap[pid] = LAA;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -668,6 +705,8 @@ int main(int argc, char* argv[]) {
 
         for (auto OAK: js["body"]["roster"]) {
             std::string pid = OAK["playerID"];
+            std::string teamID = OAK["teamID"];
+            teamMap[teamID] = OAK;
             rosterMap[pid] = OAK;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -692,6 +731,8 @@ int main(int argc, char* argv[]) {
 
         for (auto TEX: js["body"]["roster"]) {
             std::string pid = TEX["playerID"];
+            std::string teamID = TEX["teamID"];
+            teamMap[teamID] = TEX;
             rosterMap[pid] = TEX;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -716,6 +757,8 @@ int main(int argc, char* argv[]) {
 
         for (auto CHW: js["body"]["roster"]) {
             std::string pid = CHW["playerID"];
+            std::string teamID = CHW["teamID"];
+            teamMap[teamID] = CHW;
             rosterMap[pid] = CHW;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -740,6 +783,8 @@ int main(int argc, char* argv[]) {
 
         for (auto DET: js["body"]["roster"]) {
             std::string pid = DET["playerID"];
+            std::string teamID = DET["teamID"];
+            teamMap[teamID] = DET;
             rosterMap[pid] = DET;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -764,6 +809,8 @@ int main(int argc, char* argv[]) {
 
         for (auto CLE: js["body"]["roster"]) {
             std::string pid = CLE["playerID"];
+            std::string teamID = CLE["teamID"];
+            teamMap[teamID] = CLE;
             rosterMap[pid] = CLE;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -788,6 +835,8 @@ int main(int argc, char* argv[]) {
 
         for (auto MIN: js["body"]["roster"]) {
             std::string pid = MIN["playerID"];
+            std::string teamID = MIN["teamID"];
+            teamMap[teamID] = MIN;
             rosterMap[pid] = MIN;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -812,6 +861,8 @@ int main(int argc, char* argv[]) {
 
         for (auto KC: js["body"]["roster"]) {
             std::string pid = KC["playerID"];
+            std::string teamID = KC["teamID"];
+            teamMap[teamID] = KC;
             rosterMap[pid] = KC;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -836,6 +887,8 @@ int main(int argc, char* argv[]) {
 
         for (auto NYY: js["body"]["roster"]) {
             std::string pid = NYY["playerID"];
+            std::string teamID = NYY["teamID"];
+            teamMap[teamID] = NYY;
             rosterMap[pid] = NYY;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -860,6 +913,8 @@ int main(int argc, char* argv[]) {
 
         for (auto BAL: js["body"]["roster"]) {
             std::string pid = BAL["playerID"];
+            std::string teamID = BAL["teamID"];
+            teamMap[teamID] = BAL;
             rosterMap[pid] = BAL;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -884,6 +939,8 @@ int main(int argc, char* argv[]) {
 
         for (auto TB: js["body"]["roster"]) {
             std::string pid = TB["playerID"];
+            std::string teamID = TB["teamID"];
+            teamMap[teamID] = TB;
             rosterMap[pid] = TB;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -908,6 +965,8 @@ int main(int argc, char* argv[]) {
 
         for (auto BOS: js["body"]["roster"]) {
             std::string pid = BOS["playerID"];
+            std::string teamID = BOS["teamID"];
+            teamMap[teamID] = BOS;
             rosterMap[pid] = BOS;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -932,6 +991,8 @@ int main(int argc, char* argv[]) {
 
         for (auto TOR: js["body"]["roster"]) {
             std::string pid = TOR["playerID"];
+            std::string teamID = TOR["teamID"];
+            teamMap[teamID] = TOR;
             rosterMap[pid] = TOR;
             if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
                 Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
@@ -1084,11 +1145,96 @@ int main(int argc, char* argv[]) {
 
                 // 3. Show another simple window.
                 if (show_another_window) {
-                    ImGui::Begin("Another Window",
+                    ImGui::Begin("Roster/Stats",
                                  &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-                    ImGui::Text("Hello from another window!");
-                    if (ImGui::Button("Close Me"))
-                        show_another_window = false;
+
+
+                    if (ImGui::CollapsingHeader("Teams"))
+                    {
+                        for (auto [teamID, teamRoster] : teamMap){
+                            std::string tname= teamRoster["team"];
+//                            ImGui::Text(tname.c_str());c_str
+                            if (ImGui::CollapsingHeader(tname.c_str())){
+                                std::string tid = teamRoster["teamID"];
+                                ImGui::Text(tid.c_str());
+                            }
+
+                        }
+
+//                        ImGui::Text("NL West");
+//                        if (ImGui::CollapsingHeader("Arizona Diamondbacks"))
+//                        {
+//                             ImGui::Text(teamMap["1"]);
+//                        }
+//                        ImGui::CollapsingHeader("Colorado Rockies");
+//                        ImGui::CollapsingHeader("Los Angeles Dodgers");
+//                        ImGui::CollapsingHeader("San Fransisco Giants");
+//                        ImGui::CollapsingHeader("San Diego Padres");
+//
+//                        ImGui::Text("NL Central");
+//                        ImGui::CollapsingHeader("Chicago Cubs");
+//                        ImGui::CollapsingHeader("Cincinnati Reds");
+//                        ImGui::CollapsingHeader("Pittsburgh Pirates");
+//                        ImGui::CollapsingHeader("Milwaukee Brewers");
+//                        ImGui::CollapsingHeader("St. Louis Cardinals");
+//
+//                        ImGui::Text("NL East");
+//                        ImGui::CollapsingHeader("Atlanta Braves");
+//                        ImGui::CollapsingHeader("Miami Marlins");
+//                        ImGui::CollapsingHeader("New York Mets");
+//                        ImGui::CollapsingHeader("Philadelphia Phillies");
+//                        ImGui::CollapsingHeader("Washington Nationals");
+//
+//                        ImGui::Text("AL West");
+//                        ImGui::CollapsingHeader("Houston Astros");
+//                        ImGui::CollapsingHeader("Los Angeles Angels");
+//                        ImGui::CollapsingHeader("Seattle Mariners");
+//                        ImGui::CollapsingHeader("Texas Rangers");
+//                        ImGui::CollapsingHeader("Oakland Athletics");
+//
+//                        ImGui::Text("AL Central");
+//                        ImGui::CollapsingHeader("Chicago White Sox");
+//                        ImGui::CollapsingHeader("Cleveland Guardians");
+//                        ImGui::CollapsingHeader("Detroit Tigers");
+//                        ImGui::CollapsingHeader("Kansas City Royals");
+//                        ImGui::CollapsingHeader("Minnesota Twins");
+//
+//                        ImGui::Text("AL East");
+//                        ImGui::CollapsingHeader("Baltimore Orioles");
+//                        ImGui::CollapsingHeader("Boston Red Sox");
+//                        ImGui::CollapsingHeader("New York Yankees");
+//                        ImGui::CollapsingHeader("Tampa Bay Rays");
+//                        ImGui::CollapsingHeader("Toronto Blue Jays");
+//
+//                        ImGui::Text("");
+                    }
+
+                    if (ImGui::CollapsingHeader("Pitching Stats"))
+                    {
+                        ImGui::Text("Leaders");
+                        ImGui::CollapsingHeader("ERA Leaders");
+                        ImGui::CollapsingHeader("Strikeout Leaders");
+                        ImGui::CollapsingHeader("Walk Leaders");
+                        ImGui::Text("");
+                    }
+
+                    if (ImGui::CollapsingHeader("Hitting Stats"))
+                    {
+                        ImGui::CollapsingHeader("Batting Average Leaders");
+                        ImGui::CollapsingHeader("On Base Percentage Leaders");
+                        ImGui::CollapsingHeader("Slugging Percentage");
+                        ImGui::CollapsingHeader("OPS Leaders");
+                        ImGui::CollapsingHeader("Hits Leaders");
+                        ImGui::CollapsingHeader("Doubles Leaders");
+                        ImGui::CollapsingHeader("Triples Leaders");
+                        ImGui::CollapsingHeader("Home Run Leaders");
+                        ImGui::CollapsingHeader("RBI Leaders");
+                        ImGui::CollapsingHeader("Walk Leaders");
+                        ImGui::CollapsingHeader("Strikeout Leaders");
+                        ImGui::Text("");
+                    }
+
+
                     ImGui::End();
                 }
 
