@@ -162,30 +162,6 @@ int main(int argc, char* argv[]) {
                 ImGui::NewFrame();
 
                 // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-//                if (show_another_window) {
-//                    ImGui::Begin("Roster/Stats",
-//                                 &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-//
-//
-//                    if (ImGui::CollapsingHeader("Teams"))
-//                    {
-//                        for (auto [teamID, teamRoster] : TeamMap){
-//                            std::string tname= teamRoster[0]["team"];
-////                            ImGui::Text(tname.c_str());c_str
-//                            if (ImGui::CollapsingHeader(tname.c_str())){
-//                                std::cout << teamRoster << std::endl;
-//                                for(auto p : teamRoster){
-//                                    std::string pname = p["longName"];
-//                                    std::string positon = p["pos"];
-//                                    ImGui::Text(pname.c_str());
-//                                }
-//                            }
-//
-//                        }
-//                    }
-//
-//                    ImGui::End();
-//                }
 
                 // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
                 {
