@@ -36,18 +36,10 @@ include(external/cpr.cmake)
 CPMAddPackage("gh:nlohmann/json@3.10.5")
 
 # add executable
-add_executable(demo main.cpp
-)
-add_executable(demo2 main2.cpp)
+add_executable(demo main.cpp rosters.cpp)
 
 find_package(OpenGL REQUIRED)
-if(EMSCRIPTEN)
-    target_link_libraries(demo  PUBLIC SDL2        SDL2_image IMGUI  )
-    target_link_libraries(demo2 PUBLIC SDL2        ${OPENGL_gl_LIBRARY} ${CMAKE_DL_LIBS} SDL2_image IMGUI)
-    target_link_libraries(demo PUBLIC SDL2-static SDL2_image IMGUI nlohmann_json::nlohmann_json)
-ELSE()
+
     target_link_libraries(demo  PUBLIC SDL2-static SDL2_image IMGUI)
     target_link_libraries(demo PRIVATE cpr::cpr)
     target_link_libraries(demo PUBLIC SDL2-static SDL2_image IMGUI nlohmann_json::nlohmann_json)
-    target_link_libraries(demo2 PUBLIC SDL2-static ${OPENGL_gl_LIBRARY} ${CMAKE_DL_LIBS} SDL2_image IMGUI glew)
-ENDIF()
