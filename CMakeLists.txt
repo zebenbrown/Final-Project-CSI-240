@@ -37,6 +37,9 @@ CPMAddPackage("gh:nlohmann/json@3.10.5")
 
 # add executable
 add_executable(demo main.cpp
+        rosters.h
+        rosters.cpp
+        rosters.cpp
 )
 add_executable(demo2 main2.cpp)
 

@@ -16,111 +16,112 @@
 #include "imgui_impl_sdlrenderer.h"
 #include <cpr/cpr.h>
 #include <nlohmann/json.hpp>
+#include "rosters.h"
 
 
 
 
 using json = nlohmann::json;
 
-struct BaseRunning{
-    std::string CS, PO, SB;
-};
+//struct BaseRunning{
+//    std::string CS, PO, SB;
+//};
+//
+//struct Fielding{
+//    std::string Passed_Ball, Outfield_Assists, Errors, Pickoffs;
+//};
+//
+//struct Hitting{
+//    std::string BB, AB, H, IBB, HR, RBI, TB, Triple, GIDP, Double, R, SF, AVG, SAC, HBP, SO;
+//};
+//
+//struct Pitching{
+//    std::string BB, Balk, Wild_Pitch, Flyouts, Blown_Save, Loss, H, HR, ER, Strikes, WHIP, Groundouts, R, Innings_Pitched, Save, Batters_Faced, SO, Win, Hold, Pitches;
+//};
 
-struct Fielding{
-    std::string Passed_Ball, Outfield_Assists, Errors, Pickoffs;
-};
+//void from_json(const json& j, BaseRunning& br){
+//    j.at("CS").get_to(br.CS);
+//    j.at("PO").get_to(br.PO);
+//    j.at("SB").get_to(br.SB);
+//}
+//
+//void from_json(const json& j, Fielding& fielding){
+//    j.at("Passed Ball").get_to(fielding.Passed_Ball);
+//    j.at("Outfield assists").get_to(fielding.Outfield_Assists);
+//    j.at("E").get_to(fielding.Errors);
+//    j.at("Pickoffs").get_to(fielding.Pickoffs);
+//}
+//
+//void from_json(const json& j, Hitting& hitting){
+//    j.at("BB").get_to(hitting.BB);
+//    j.at("AB").get_to(hitting.AB);
+//    j.at("H").get_to(hitting.H);
+//    j.at("IBB").get_to(hitting.IBB);
+//    j.at("HR").get_to(hitting.RBI);
+//    j.at("TB").get_to(hitting.TB);
+//    j.at("3B").get_to(hitting.Triple);
+//    j.at("GIDP").get_to(hitting.GIDP);
+//    j.at("2B").get_to(hitting.Double);
+//    j.at("R").get_to(hitting.R);
+//    j.at("avg").get_to(hitting.AVG);
+//    j.at("SAC").get_to(hitting.HBP);
+//    j.at("SO").get_to(hitting.SO);
+//}
+//
+//void from_json(const json& j, Pitching& pitching){
+//    j.at("BB").get_to(pitching.BB);
+//    j.at("Balk").get_to(pitching.Balk);
+//    j.at("Wild Pitch").get_to(pitching.Wild_Pitch);
+//    j.at("Flyouts").get_to(pitching.Flyouts);
+//    j.at("BlownSave").get_to(pitching.Blown_Save);
+//    j.at("Loss").get_to(pitching.Loss);
+//    j.at("H").get_to(pitching.H);
+//    j.at("HR").get_to(pitching.HR);
+//    j.at("ER").get_to(pitching.ER);
+//    j.at("Strikes").get_to(pitching.ER);
+//    j.at("WHIP").get_to(pitching.WHIP);
+//    j.at("Groundouts").get_to(pitching.Groundouts);
+//    j.at("R").get_to(pitching.R);
+//    j.at("InningsPitched").get_to(pitching.Innings_Pitched);
+//    j.at("Save").get_to(pitching.Save);
+//    j.at("Batters Faced").get_to(pitching.Batters_Faced);
+//    j.at("SO").get_to(pitching.SO);
+//    j.at("Win").get_to(pitching.Win);
+//    j.at("Hold").get_to(pitching.Hold);
+//    j.at("Pitches").get_to(pitching.Pitches);
+//}
 
-struct Hitting{
-    std::string BB, AB, H, IBB, HR, RBI, TB, Triple, GIDP, Double, R, SF, AVG, SAC, HBP, SO;
-};
-
-struct Pitching{
-    std::string BB, Balk, Wild_Pitch, Flyouts, Blown_Save, Loss, H, HR, ER, Strikes, WHIP, Groundouts, R, Innings_Pitched, Save, Batters_Faced, SO, Win, Hold, Pitches;
-};
-
-void from_json(const json& j, BaseRunning& br){
-    j.at("CS").get_to(br.CS);
-    j.at("PO").get_to(br.PO);
-    j.at("SB").get_to(br.SB);
-}
-
-void from_json(const json& j, Fielding& fielding){
-    j.at("Passed Ball").get_to(fielding.Passed_Ball);
-    j.at("Outfield assists").get_to(fielding.Outfield_Assists);
-    j.at("E").get_to(fielding.Errors);
-    j.at("Pickoffs").get_to(fielding.Pickoffs);
-}
-
-void from_json(const json& j, Hitting& hitting){
-    j.at("BB").get_to(hitting.BB);
-    j.at("AB").get_to(hitting.AB);
-    j.at("H").get_to(hitting.H);
-    j.at("IBB").get_to(hitting.IBB);
-    j.at("HR").get_to(hitting.RBI);
-    j.at("TB").get_to(hitting.TB);
-    j.at("3B").get_to(hitting.Triple);
-    j.at("GIDP").get_to(hitting.GIDP);
-    j.at("2B").get_to(hitting.Double);
-    j.at("R").get_to(hitting.R);
-    j.at("avg").get_to(hitting.AVG);
-    j.at("SAC").get_to(hitting.HBP);
-    j.at("SO").get_to(hitting.SO);
-}
-
-void from_json(const json& j, Pitching& pitching){
-    j.at("BB").get_to(pitching.BB);
-    j.at("Balk").get_to(pitching.Balk);
-    j.at("Wild Pitch").get_to(pitching.Wild_Pitch);
-    j.at("Flyouts").get_to(pitching.Flyouts);
-    j.at("BlownSave").get_to(pitching.Blown_Save);
-    j.at("Loss").get_to(pitching.Loss);
-    j.at("H").get_to(pitching.H);
-    j.at("HR").get_to(pitching.HR);
-    j.at("ER").get_to(pitching.ER);
-    j.at("Strikes").get_to(pitching.ER);
-    j.at("WHIP").get_to(pitching.WHIP);
-    j.at("Groundouts").get_to(pitching.Groundouts);
-    j.at("R").get_to(pitching.R);
-    j.at("InningsPitched").get_to(pitching.Innings_Pitched);
-    j.at("Save").get_to(pitching.Save);
-    j.at("Batters Faced").get_to(pitching.Batters_Faced);
-    j.at("SO").get_to(pitching.SO);
-    j.at("Win").get_to(pitching.Win);
-    j.at("Hold").get_to(pitching.Hold);
-    j.at("Pitches").get_to(pitching.Pitches);
-}
-
-struct BaseRunning_Stats{
-    BaseRunning baseRunning;
-
-    BaseRunning_Stats(const nlohmann::json& js){
-        baseRunning = js["stats"]["BaseRunning"];
-    }
-};
-
-struct Fielding_Stats{
-    Fielding fielding;
-
-    Fielding_Stats(const nlohmann::json& js){
-        fielding = js["stats"]["Fielding"];
-    }
-};
-
-struct Hitting_Stats{
-    Hitting hitting;
-
-    Hitting_Stats(const nlohmann::json& js){
-        hitting = js["stats"]["Hitting"];
-    }
-};
-
-struct Pitching_Stats{
-    Pitching pitching;
-
-    Pitching_Stats(const nlohmann::json& js){
-        pitching = js["stats"]["Pitching"];
-    }
-};
+//struct BaseRunning_Stats{
+//    BaseRunning baseRunning;
+//
+//    BaseRunning_Stats(const nlohmann::json& js){
+//        baseRunning = js["stats"]["BaseRunning"];
+//    }
+//};
+//
+//struct Fielding_Stats{
+//    Fielding fielding;
+//
+//    Fielding_Stats(const nlohmann::json& js){
+//        fielding = js["stats"]["Fielding"];
+//    }
+//};
+//
+//struct Hitting_Stats{
+//    Hitting hitting;
+//
+//    Hitting_Stats(const nlohmann::json& js){
+//        hitting = js["stats"]["Hitting"];
+//    }
+//};
+//
+//struct Pitching_Stats{
+//    Pitching pitching;
+//
+//    Pitching_Stats(const nlohmann::json& js){
+//        pitching = js["stats"]["Pitching"];
+//    }
+//};
 
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -233,777 +234,788 @@ int main(int argc, char* argv[]) {
 //                          << " Weight: " << weight << "Hits: " << std::endl;
         }
 
-        for (auto ARI: js["body"]["roster"]) {
-            std::string pid = ARI["playerID"];
-            std::string teamID = ARI["teamID"];
-            teamMap[teamID] = ARI;
-            rosterMap[pid] = ARI;
-            if (rosterMap[pid].contains("stats") && rosterMap[pid]["stats"].contains("Pitching") && !rosterMap[pid]["stats"].empty()) {
-                //BaseRunning_Stats baseRunningStats = BaseRunning_Stats(rosterMap[pid]);
-                //Fielding_Stats fieldingStats = Fielding_Stats(rosterMap[pid]);
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
+//        for (auto ARI: js["body"]["roster"]) {
+//            std::string pid = ARI["playerID"];
+//            std::string teamID = ARI["teamID"];
+//            teamMap[teamID] = ARI;
+//            rosterMap[pid] = ARI;
+//            if (rosterMap[pid].contains("stats") && rosterMap[pid]["stats"].contains("Pitching") && !rosterMap[pid]["stats"].empty()) {
+//                //BaseRunning_Stats baseRunningStats = BaseRunning_Stats(rosterMap[pid]);
+//                //Fielding_Stats fieldingStats = Fielding_Stats(rosterMap[pid]);
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//            ARI_roster.status_code;
+//            std::cout << "ARI Roster Status Code " << ARI_roster.status_code << std::endl;
+//
+//        cpr::Response COL_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=COL&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//            js = json::parse(COL_roster.text);
+//
+//            for (auto COL: js["body"]["roster"]) {
+//            std::string pid = COL["playerID"];
+//            std::string teamID = COL["teamID"];
+//            rosterMap[pid] = COL;
+//            teamMap[teamID] = COL;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//            std::cout << "COL Roster Status Code " << COL_roster.status_code << std::endl;
+//
+//            cpr::Response LAD_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=LAD&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(LAD_roster.text);
+//
+//        for (auto LAD: js["body"]["roster"]) {
+//            std::string pid = LAD["playerID"];
+//            std::string teamID = LAD["teamID"];
+//            teamMap[teamID] = LAD;
+//            rosterMap[pid] = LAD;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//        std::cout << "LAD Roster Status Code " << LAD_roster.status_code << std::endl;
+//
+//        cpr::Response SF_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SF&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(SF_roster.text);
+//
+//        for (auto SF: js["body"]["roster"]) {
+//            std::string pid = SF["playerID"];
+//            std::string teamID = SF["teamID"];
+//            rosterMap[pid] = SF;
+//            teamMap[teamID] = SF;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "SF Roster Status Code " << SF_roster.status_code << std::endl;
+//
+//        cpr::Response SD_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SD&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(SD_roster.text);
+//
+//        for (auto SD: js["body"]["roster"]) {
+//            std::string pid = SD["playerID"];
+//            std::string teamID = SD["teamID"];
+//            teamMap[teamID] = SD;
+//            rosterMap[pid] = SD;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "SD Roster Status Code " << SD_roster.status_code << std::endl;
+//
+//
+//        cpr::Response CHC_roster = cpr::Get(cpr::Url{
+//                                                   "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CHC&getStats=true"},
+//                                           cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                           cpr::Header{
+//                                                   {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                   {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                           });
+//
+//        js = json::parse(CHC_roster.text);
+//
+//        for (auto CHC: js["body"]["roster"]) {
+//            std::string pid = CHC["playerID"];
+//            std::string teamID = CHC["teamID"];
+//            teamMap[teamID] = CHC;
+//            rosterMap[pid] = CHC;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "CHC Roster Status Code " << CHC_roster.status_code << std::endl;
+//
+//        cpr::Response STL_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=STL&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(STL_roster.text);
+//
+//        for (auto STL: js["body"]["roster"]) {
+//            std::string pid = STL["playerID"];
+//            std::string teamID = STL["teamID"];
+//            teamMap[teamID] = STL;
+//            rosterMap[pid] = STL;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "STL Roster Status Code " << STL_roster.status_code << std::endl;
+//
+//        cpr::Response CIN_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CIN&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(CIN_roster.text);
+//
+//        for (auto CIN: js["body"]["roster"]) {
+//            std::string pid = CIN["playerID"];
+//            std::string teamID = CIN["teamID"];
+//            teamMap[teamID] = CIN;
+//            rosterMap[pid] = CIN;
+//
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "CIN Roster Status Code " << CIN_roster.status_code << std::endl;
+//
+//        cpr::Response PIT_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=PIT&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(PIT_roster.text);
+//
+//        for (auto PIT: js["body"]["roster"]) {
+//            std::string pid = PIT["playerID"];
+//            std::string teamID = PIT["teamID"];
+//            teamMap[teamID] = PIT;
+//            rosterMap[pid] = PIT;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "PIT Roster Status Code " << PIT_roster.status_code << std::endl;
+//
+//        cpr::Response MIL_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIL&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(MIL_roster.text);
+//
+//        for (auto MIL: js["body"]["roster"]) {
+//            std::string pid = MIL["playerID"];
+//            std::string teamID = MIL["teamID"];
+//            teamMap[teamID] = MIL;
+//            rosterMap[pid] = MIL;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "MIL Roster Status Code " << MIL_roster.status_code << std::endl;
+//
+//        cpr::Response PHI_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=PHI&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(PHI_roster.text);
+//
+//        for (auto PHI: js["body"]["roster"]) {
+//            std::string pid = PHI["playerID"];
+//            std::string teamID = PHI["teamID"];
+//            teamMap[teamID] = PHI;
+//            rosterMap[pid] = PHI;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "PHI Roster Status Code " << PHI_roster.status_code << std::endl;
+//
+//        cpr::Response NYM_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=NYM&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(NYM_roster.text);
+//
+//        for (auto NYM: js["body"]["roster"]) {
+//            std::string pid = NYM["playerID"];
+//            std::string teamID = NYM["teamID"];
+//            teamMap[teamID] = NYM;
+//            rosterMap[pid] = NYM;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "NYM Roster Status Code " << NYM_roster.status_code << std::endl;
+//
+//        cpr::Response ATL_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=ATL&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(ATL_roster.text);
+//
+//        for (auto ATL: js["body"]["roster"]) {
+//            std::string pid = ATL["playerID"];
+//            std::string teamID = ATL["teamID"];
+//            teamMap[teamID] = ATL;
+//            rosterMap[pid] = ATL;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "ATL Roster Status Code " << ATL_roster.status_code << std::endl;
+//
+//        cpr::Response MIA_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIA&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(MIA_roster.text);
+//
+//        for (auto MIA: js["body"]["roster"]) {
+//            std::string pid = MIA["playerID"];
+//            std::string teamID = MIA["teamID"];
+//            teamMap[teamID] = MIA;
+//            rosterMap[pid] = MIA;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "MIA Roster Status Code " << MIA_roster.status_code << std::endl;
+//
+//        cpr::Response WSH_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=WSH&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(WSH_roster.text);
+//
+//        for (auto WSH: js["body"]["roster"]) {
+//            std::string pid = WSH["playerID"];
+//            std::string teamID = WSH["teamID"];
+//            teamMap[teamID] = WSH;
+//            rosterMap[pid] = WSH;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "WSH Roster Status Code " << WSH_roster.status_code << std::endl;
+//
+//        cpr::Response SEA_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SEA&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(SEA_roster.text);
+//
+//        for (auto SEA: js["body"]["roster"]) {
+//            std::string pid = SEA["playerID"];
+//            std::string teamID = SEA["teamID"];
+//            teamMap[teamID] = SEA;
+//            rosterMap[pid] = SEA;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "SEA Roster Status Code " << SEA_roster.status_code << std::endl;
+//
+//        cpr::Response HOU_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=HOU&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(HOU_roster.text);
+//
+//        for (auto HOU: js["body"]["roster"]) {
+//            std::string pid = HOU["playerID"];
+//            std::string teamID = HOU["teamID"];
+//            teamMap[teamID] = HOU;
+//            rosterMap[pid] = HOU;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "HOU Roster Status Code " << HOU_roster.status_code << std::endl;
+//
+//        cpr::Response LAA_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=LAA&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(LAA_roster.text);
+//
+//        for (auto LAA: js["body"]["roster"]) {
+//            std::string pid = LAA["playerID"];
+//            std::string teamID = LAA["teamID"];
+//            teamMap[teamID] = LAA;
+//            rosterMap[pid] = LAA;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "LAA Roster Status Code " << LAA_roster.status_code << std::endl;
+//
+//        cpr::Response OAK_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=OAK&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(OAK_roster.text);
+//
+//        for (auto OAK: js["body"]["roster"]) {
+//            std::string pid = OAK["playerID"];
+//            std::string teamID = OAK["teamID"];
+//            teamMap[teamID] = OAK;
+//            rosterMap[pid] = OAK;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "OAK Roster Status Code " << OAK_roster.status_code << std::endl;
+//
+//        cpr::Response TEX_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TEX&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(TEX_roster.text);
+//
+//        for (auto TEX: js["body"]["roster"]) {
+//            std::string pid = TEX["playerID"];
+//            std::string teamID = TEX["teamID"];
+//            teamMap[teamID] = TEX;
+//            rosterMap[pid] = TEX;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "TEX Roster Status Code " << TEX_roster.status_code << std::endl;
+//
+//        cpr::Response CHW_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CHW&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(CHW_roster.text);
+//
+//        for (auto CHW: js["body"]["roster"]) {
+//            std::string pid = CHW["playerID"];
+//            std::string teamID = CHW["teamID"];
+//            teamMap[teamID] = CHW;
+//            rosterMap[pid] = CHW;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "CHW Roster Status Code " << CHW_roster.status_code << std::endl;
+//
+//        cpr::Response DET_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=DET&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(DET_roster.text);
+//
+//        for (auto DET: js["body"]["roster"]) {
+//            std::string pid = DET["playerID"];
+//            std::string teamID = DET["teamID"];
+//            teamMap[teamID] = DET;
+//            rosterMap[pid] = DET;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "DET Roster Status Code " << DET_roster.status_code << std::endl;
+//
+//        cpr::Response CLE_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CLE&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(CLE_roster.text);
+//
+//        for (auto CLE: js["body"]["roster"]) {
+//            std::string pid = CLE["playerID"];
+//            std::string teamID = CLE["teamID"];
+//            teamMap[teamID] = CLE;
+//            rosterMap[pid] = CLE;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "CLE Roster Status Code " << CLE_roster.status_code << std::endl;
+//
+//        cpr::Response MIN_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIN&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(MIN_roster.text);
+//
+//        for (auto MIN: js["body"]["roster"]) {
+//            std::string pid = MIN["playerID"];
+//            std::string teamID = MIN["teamID"];
+//            teamMap[teamID] = MIN;
+//            rosterMap[pid] = MIN;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "MIN Roster Status Code " << MIN_roster.status_code << std::endl;
+//
+//        cpr::Response KC_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=KC&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(KC_roster.text);
+//
+//        for (auto KC: js["body"]["roster"]) {
+//            std::string pid = KC["playerID"];
+//            std::string teamID = KC["teamID"];
+//            teamMap[teamID] = KC;
+//            rosterMap[pid] = KC;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "KC Roster Status Code " << KC_roster.status_code << std::endl;
+//
+//        cpr::Response NYY_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=NYY&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(NYY_roster.text);
+//
+//        for (auto NYY: js["body"]["roster"]) {
+//            std::string pid = NYY["playerID"];
+//            std::string teamID = NYY["teamID"];
+//            teamMap[teamID] = NYY;
+//            rosterMap[pid] = NYY;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "NYY Roster Status Code " << NYY_roster.status_code << std::endl;
+//
+//        cpr::Response BAL_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=BAL&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(BAL_roster.text);
+//
+//        for (auto BAL: js["body"]["roster"]) {
+//            std::string pid = BAL["playerID"];
+//            std::string teamID = BAL["teamID"];
+//            teamMap[teamID] = BAL;
+//            rosterMap[pid] = BAL;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "BAL Roster Status Code " << BAL_roster.status_code << std::endl;
+//
+//        cpr::Response TB_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TB&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(TB_roster.text);
+//
+//        for (auto TB: js["body"]["roster"]) {
+//            std::string pid = TB["playerID"];
+//            std::string teamID = TB["teamID"];
+//            teamMap[teamID] = TB;
+//            rosterMap[pid] = TB;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "TB Roster Status Code " << TB_roster.status_code << std::endl;
+//
+//        cpr::Response BOS_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=BOS&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(BOS_roster.text);
+//
+//        for (auto BOS: js["body"]["roster"]) {
+//            std::string pid = BOS["playerID"];
+//            std::string teamID = BOS["teamID"];
+//            teamMap[teamID] = BOS;
+//            rosterMap[pid] = BOS;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "BOS Roster Status Code " << BOS_roster.status_code << std::endl;
+//
+//        cpr::Response TOR_roster = cpr::Get(cpr::Url{
+//                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TOR&getStats=true"},
+//                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
+//                                            cpr::Header{
+//                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
+//                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
+//                                            });
+//
+//        js = json::parse(TOR_roster.text);
+//
+//        for (auto TOR: js["body"]["roster"]) {
+//            std::string pid = TOR["playerID"];
+//            std::string teamID = TOR["teamID"];
+//            teamMap[teamID] = TOR;
+//            rosterMap[pid] = TOR;
+//            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
+//                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
+//            }
+//
+//            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
+//                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
+//            }
+//        }
+//
+//        std::cout << "TOR Roster Status Code " << TOR_roster.status_code << std::endl;
 
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
+        std::vector<std::string> teamsStr = {"ARI", "COL", "SF", "LAD", "SD",
+                                             "CHC", "STL", "CIN", "PIT", "MIL",
+                                             "NYM", "ATL", "MIA", "WSH", "PHI",
+                                             "SEA", "HOU", "TEX", "OAK", "LAA",
+                                             "CHW", "MIN", "DET", "CLE", "KC",
+                                             "NYY", "BAL", "TB", "BOS", "TOR"};
+
+        for (auto teams : teamsStr){
+            GetRosters(teams);
         }
-            ARI_roster.status_code;
-            std::cout << "ARI Roster Status Code " << ARI_roster.status_code << std::endl;
-
-        cpr::Response COL_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=COL&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-            js = json::parse(COL_roster.text);
-
-            for (auto COL: js["body"]["roster"]) {
-            std::string pid = COL["playerID"];
-            std::string teamID = COL["teamID"];
-            rosterMap[pid] = COL;
-            teamMap[teamID] = COL;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-            std::cout << "COL Roster Status Code " << COL_roster.status_code << std::endl;
-
-            cpr::Response LAD_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=LAD&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(LAD_roster.text);
-
-        for (auto LAD: js["body"]["roster"]) {
-            std::string pid = LAD["playerID"];
-            std::string teamID = LAD["teamID"];
-            teamMap[teamID] = LAD;
-            rosterMap[pid] = LAD;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-        std::cout << "LAD Roster Status Code " << LAD_roster.status_code << std::endl;
-
-        cpr::Response SF_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SF&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(SF_roster.text);
-
-        for (auto SF: js["body"]["roster"]) {
-            std::string pid = SF["playerID"];
-            std::string teamID = SF["teamID"];
-            rosterMap[pid] = SF;
-            teamMap[teamID] = SF;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "SF Roster Status Code " << SF_roster.status_code << std::endl;
-
-        cpr::Response SD_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SD&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(SD_roster.text);
-
-        for (auto SD: js["body"]["roster"]) {
-            std::string pid = SD["playerID"];
-            std::string teamID = SD["teamID"];
-            teamMap[teamID] = SD;
-            rosterMap[pid] = SD;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "SD Roster Status Code " << SD_roster.status_code << std::endl;
-
-
-        cpr::Response CHC_roster = cpr::Get(cpr::Url{
-                                                   "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CHC&getStats=true"},
-                                           cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                           cpr::Header{
-                                                   {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                   {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                           });
-
-        js = json::parse(CHC_roster.text);
-
-        for (auto CHC: js["body"]["roster"]) {
-            std::string pid = CHC["playerID"];
-            std::string teamID = CHC["teamID"];
-            teamMap[teamID] = CHC;
-            rosterMap[pid] = CHC;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "CHC Roster Status Code " << CHC_roster.status_code << std::endl;
-
-        cpr::Response STL_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=STL&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(STL_roster.text);
-
-        for (auto STL: js["body"]["roster"]) {
-            std::string pid = STL["playerID"];
-            std::string teamID = STL["teamID"];
-            teamMap[teamID] = STL;
-            rosterMap[pid] = STL;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "STL Roster Status Code " << STL_roster.status_code << std::endl;
-
-        cpr::Response CIN_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CIN&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(CIN_roster.text);
-
-        for (auto CIN: js["body"]["roster"]) {
-            std::string pid = CIN["playerID"];
-            std::string teamID = CIN["teamID"];
-            teamMap[teamID] = CIN;
-            rosterMap[pid] = CIN;
-
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "CIN Roster Status Code " << CIN_roster.status_code << std::endl;
-
-        cpr::Response PIT_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=PIT&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(PIT_roster.text);
-
-        for (auto PIT: js["body"]["roster"]) {
-            std::string pid = PIT["playerID"];
-            std::string teamID = PIT["teamID"];
-            teamMap[teamID] = PIT;
-            rosterMap[pid] = PIT;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "PIT Roster Status Code " << PIT_roster.status_code << std::endl;
-
-        cpr::Response MIL_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIL&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(MIL_roster.text);
-
-        for (auto MIL: js["body"]["roster"]) {
-            std::string pid = MIL["playerID"];
-            std::string teamID = MIL["teamID"];
-            teamMap[teamID] = MIL;
-            rosterMap[pid] = MIL;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "MIL Roster Status Code " << MIL_roster.status_code << std::endl;
-
-        cpr::Response PHI_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=PHI&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(PHI_roster.text);
-
-        for (auto PHI: js["body"]["roster"]) {
-            std::string pid = PHI["playerID"];
-            std::string teamID = PHI["teamID"];
-            teamMap[teamID] = PHI;
-            rosterMap[pid] = PHI;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "PHI Roster Status Code " << PHI_roster.status_code << std::endl;
-
-        cpr::Response NYM_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=NYM&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(NYM_roster.text);
-
-        for (auto NYM: js["body"]["roster"]) {
-            std::string pid = NYM["playerID"];
-            std::string teamID = NYM["teamID"];
-            teamMap[teamID] = NYM;
-            rosterMap[pid] = NYM;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "NYM Roster Status Code " << NYM_roster.status_code << std::endl;
-
-        cpr::Response ATL_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=ATL&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(ATL_roster.text);
-
-        for (auto ATL: js["body"]["roster"]) {
-            std::string pid = ATL["playerID"];
-            std::string teamID = ATL["teamID"];
-            teamMap[teamID] = ATL;
-            rosterMap[pid] = ATL;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "ATL Roster Status Code " << ATL_roster.status_code << std::endl;
-
-        cpr::Response MIA_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIA&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(MIA_roster.text);
-
-        for (auto MIA: js["body"]["roster"]) {
-            std::string pid = MIA["playerID"];
-            std::string teamID = MIA["teamID"];
-            teamMap[teamID] = MIA;
-            rosterMap[pid] = MIA;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "MIA Roster Status Code " << MIA_roster.status_code << std::endl;
-
-        cpr::Response WSH_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=WSH&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(WSH_roster.text);
-
-        for (auto WSH: js["body"]["roster"]) {
-            std::string pid = WSH["playerID"];
-            std::string teamID = WSH["teamID"];
-            teamMap[teamID] = WSH;
-            rosterMap[pid] = WSH;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "WSH Roster Status Code " << WSH_roster.status_code << std::endl;
-
-        cpr::Response SEA_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=SEA&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(SEA_roster.text);
-
-        for (auto SEA: js["body"]["roster"]) {
-            std::string pid = SEA["playerID"];
-            std::string teamID = SEA["teamID"];
-            teamMap[teamID] = SEA;
-            rosterMap[pid] = SEA;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "SEA Roster Status Code " << SEA_roster.status_code << std::endl;
-
-        cpr::Response HOU_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=HOU&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(HOU_roster.text);
-
-        for (auto HOU: js["body"]["roster"]) {
-            std::string pid = HOU["playerID"];
-            std::string teamID = HOU["teamID"];
-            teamMap[teamID] = HOU;
-            rosterMap[pid] = HOU;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "HOU Roster Status Code " << HOU_roster.status_code << std::endl;
-
-        cpr::Response LAA_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=LAA&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(LAA_roster.text);
-
-        for (auto LAA: js["body"]["roster"]) {
-            std::string pid = LAA["playerID"];
-            std::string teamID = LAA["teamID"];
-            teamMap[teamID] = LAA;
-            rosterMap[pid] = LAA;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "LAA Roster Status Code " << LAA_roster.status_code << std::endl;
-
-        cpr::Response OAK_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=OAK&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(OAK_roster.text);
-
-        for (auto OAK: js["body"]["roster"]) {
-            std::string pid = OAK["playerID"];
-            std::string teamID = OAK["teamID"];
-            teamMap[teamID] = OAK;
-            rosterMap[pid] = OAK;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "OAK Roster Status Code " << OAK_roster.status_code << std::endl;
-
-        cpr::Response TEX_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TEX&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(TEX_roster.text);
-
-        for (auto TEX: js["body"]["roster"]) {
-            std::string pid = TEX["playerID"];
-            std::string teamID = TEX["teamID"];
-            teamMap[teamID] = TEX;
-            rosterMap[pid] = TEX;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "TEX Roster Status Code " << TEX_roster.status_code << std::endl;
-
-        cpr::Response CHW_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CHW&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(CHW_roster.text);
-
-        for (auto CHW: js["body"]["roster"]) {
-            std::string pid = CHW["playerID"];
-            std::string teamID = CHW["teamID"];
-            teamMap[teamID] = CHW;
-            rosterMap[pid] = CHW;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "CHW Roster Status Code " << CHW_roster.status_code << std::endl;
-
-        cpr::Response DET_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=DET&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(DET_roster.text);
-
-        for (auto DET: js["body"]["roster"]) {
-            std::string pid = DET["playerID"];
-            std::string teamID = DET["teamID"];
-            teamMap[teamID] = DET;
-            rosterMap[pid] = DET;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "DET Roster Status Code " << DET_roster.status_code << std::endl;
-
-        cpr::Response CLE_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=CLE&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(CLE_roster.text);
-
-        for (auto CLE: js["body"]["roster"]) {
-            std::string pid = CLE["playerID"];
-            std::string teamID = CLE["teamID"];
-            teamMap[teamID] = CLE;
-            rosterMap[pid] = CLE;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "CLE Roster Status Code " << CLE_roster.status_code << std::endl;
-
-        cpr::Response MIN_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=MIN&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(MIN_roster.text);
-
-        for (auto MIN: js["body"]["roster"]) {
-            std::string pid = MIN["playerID"];
-            std::string teamID = MIN["teamID"];
-            teamMap[teamID] = MIN;
-            rosterMap[pid] = MIN;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "MIN Roster Status Code " << MIN_roster.status_code << std::endl;
-
-        cpr::Response KC_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=KC&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(KC_roster.text);
-
-        for (auto KC: js["body"]["roster"]) {
-            std::string pid = KC["playerID"];
-            std::string teamID = KC["teamID"];
-            teamMap[teamID] = KC;
-            rosterMap[pid] = KC;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "KC Roster Status Code " << KC_roster.status_code << std::endl;
-
-        cpr::Response NYY_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=NYY&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(NYY_roster.text);
-
-        for (auto NYY: js["body"]["roster"]) {
-            std::string pid = NYY["playerID"];
-            std::string teamID = NYY["teamID"];
-            teamMap[teamID] = NYY;
-            rosterMap[pid] = NYY;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "NYY Roster Status Code " << NYY_roster.status_code << std::endl;
-
-        cpr::Response BAL_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=BAL&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(BAL_roster.text);
-
-        for (auto BAL: js["body"]["roster"]) {
-            std::string pid = BAL["playerID"];
-            std::string teamID = BAL["teamID"];
-            teamMap[teamID] = BAL;
-            rosterMap[pid] = BAL;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "BAL Roster Status Code " << BAL_roster.status_code << std::endl;
-
-        cpr::Response TB_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TB&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(TB_roster.text);
-
-        for (auto TB: js["body"]["roster"]) {
-            std::string pid = TB["playerID"];
-            std::string teamID = TB["teamID"];
-            teamMap[teamID] = TB;
-            rosterMap[pid] = TB;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "TB Roster Status Code " << TB_roster.status_code << std::endl;
-
-        cpr::Response BOS_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=BOS&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(BOS_roster.text);
-
-        for (auto BOS: js["body"]["roster"]) {
-            std::string pid = BOS["playerID"];
-            std::string teamID = BOS["teamID"];
-            teamMap[teamID] = BOS;
-            rosterMap[pid] = BOS;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "BOS Roster Status Code " << BOS_roster.status_code << std::endl;
-
-        cpr::Response TOR_roster = cpr::Get(cpr::Url{
-                                                    "https://tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com/getMLBTeamRoster?teamAbv=TOR&getStats=true"},
-                                            cpr::Authentication{"user", "pass", cpr::AuthMode::BASIC},
-                                            cpr::Header{
-                                                    {"X-RapidAPI-Key",  "45163bd802msh2c9c15fa6c4660dp18f643jsn931c847bc680"},
-                                                    {"X-RapidAPI-Host", "tank01-mlb-live-in-game-real-time-statistics.p.rapidapi.com"}
-                                            });
-
-        js = json::parse(TOR_roster.text);
-
-        for (auto TOR: js["body"]["roster"]) {
-            std::string pid = TOR["playerID"];
-            std::string teamID = TOR["teamID"];
-            teamMap[teamID] = TOR;
-            rosterMap[pid] = TOR;
-            if(rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Pitching")) {
-                Pitching_Stats pitchingStats = Pitching_Stats(rosterMap[pid]);
-            }
-
-            else if (rosterMap[pid].contains("stats") && !rosterMap[pid]["stats"].empty() && rosterMap[pid]["stats"].contains("Hitting")){
-                Hitting_Stats hittingStats = Hitting_Stats(rosterMap[pid]);
-            }
-        }
-
-        std::cout << "TOR Roster Status Code " << TOR_roster.status_code << std::endl;
             if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER | SDL_INIT_GAMECONTROLLER) != 0) {
                 printf("Error: %s\n", SDL_GetError());
                 return -1;
@@ -1114,8 +1126,30 @@ int main(int argc, char* argv[]) {
                 ImGui::NewFrame();
 
                 // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-                if (show_demo_window)
-                    ImGui::ShowDemoWindow(&show_demo_window);
+                if (show_another_window) {
+                    ImGui::Begin("Roster/Stats",
+                                 &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+
+
+                    if (ImGui::CollapsingHeader("Teams"))
+                    {
+                        for (auto [teamID, teamRoster] : teamMap){
+                            std::string tname= teamRoster[0]["team"];
+//                            ImGui::Text(tname.c_str());c_str
+                            if (ImGui::CollapsingHeader(tname.c_str())){
+                                std::cout << teamRoster << std::endl;
+                                for(auto p : teamRoster){
+                                    std::string pname = p["longName"];
+                                    std::string positon = p["pos"];
+                                    ImGui::Text(pname.c_str());
+                                }
+                            }
+
+                        }
+                    }
+
+                    ImGui::End();
+                }
 
                 // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
                 {
