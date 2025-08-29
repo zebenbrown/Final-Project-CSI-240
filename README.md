@@ -1,11 +1,8 @@
-# SDL2-CPM-CMake-Example
+## Archival Note: Student Project (Spring 2024)
 
-## Summary
-Example on how to import SDL2 via CPM (CMake Package Manager) into a CMake project.
+Please note: This is a final project from a university course completed in the Spring of 2024. The build is dependent on a specific development environment and libraries from that time and is no longer actively maintained. The source code is preserved here as a portfolio piece to demonstrate the concepts and skills learned.
 
-It downloads and imports CPM if not present, dowloads it. I have to do some some small tricks on CMakeLists.txt to link SDL2 into your executable correctly.
+---
 
-- SDL Renderer https://infinibrains.github.io/SDL2-CPM-CMake-Example/
-- OPENGL Renderer https://infinibrains.github.io/SDL2-CPM-CMake-Example/opengl.html
-
-ToDo: support https://github.com/bkaradzic/bgfx
+- The project used an api with JSON to receive data on all MLB teams to display each team's rosters, players, and their relevant stats
+- It also used a graphical interface that made using ImGUI
